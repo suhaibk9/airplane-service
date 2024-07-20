@@ -61,7 +61,21 @@ const destroyAirplane = async (primaryKey) => {
     );
   }
 };
+const updateAirplane = async (id, data) => {
+  try {
+    return await airplaneRepository.update(id, data);
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      throw new AppError('Airplane not found', StatusCodes.NOT_FOUND);
+    }
+    throw new AppError(
+      'Error updating airplane',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
 module.exports = {
+  updateAirplane,
   destroyAirplane,
   createAirplane,
   getAirplanes,

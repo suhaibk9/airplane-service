@@ -36,11 +36,18 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    return await this.model.update(data, {
+    if (!id) {
+      throw new AppError('Id is required', StatusCodes.BAD_REQUEST);
+    }
+    const airplane = await this.model.update(data, {
       where: {
         id: id,
       },
     });
+    if (!airplane) {
+      throw new AppError('Airplane not found', StatusCodes.NOT_FOUND);
+    }
+    return airplane;
   }
 }
 
