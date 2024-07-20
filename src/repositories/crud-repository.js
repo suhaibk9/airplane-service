@@ -11,17 +11,21 @@ class CrudRepository {
   }
 
   async destroy(data) {
-    return await this.model.destroy({
+    const airplane = await this.model.destroy({
       where: {
         id: data,
       },
     });
+    if (!airplane) {
+      throw new AppError('Airplane not found', StatusCodes.NOT_FOUND);
+    }
+    return airplane;
   }
 
   async get(primaryKey) {
     const airplane = await this.model.findByPk(primaryKey);
     if (!airplane) {
-     console.log("No Airplane Found");
+      console.log('No Airplane Found');
       throw new AppError('Airplane not found', StatusCodes.NOT_FOUND);
     }
     return airplane;
