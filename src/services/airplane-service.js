@@ -17,9 +17,11 @@ const createAirplane = async (airplane) => {
       error.errors.forEach((err) => explanation.push(err.message));
       console.log('Explanations: ', explanation);
       throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
-    } else {
-      throw error;
     }
+    throw new AppError(
+      'Error creating airplane',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
   }
 };
 

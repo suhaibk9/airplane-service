@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
+const { SuccessResponse, ErrorResponse } = require('../utils/common');
 const { AirplaneService } = require('../services/index');
 
-const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
 async function createAirplane(req, res) {
   try {

@@ -25,8 +25,7 @@ class CrudRepository {
   async get(primaryKey) {
     const airplane = await this.model.findByPk(primaryKey);
     if (!airplane) {
-      console.log('No Airplane Found');
-      throw new AppError('Airplane not found', StatusCodes.NOT_FOUND);
+      throw new AppError('Not Found', StatusCodes.NOT_FOUND);
     }
     return airplane;
   }
