@@ -2,7 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Airplane extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models.Flight, {
+        foreignKey: 'airplaneId',
+        onDelete: 'CASCADE',
+      });
+    }
   }
   Airplane.init(
     {
@@ -12,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isAlphanumeric: true,
         },
-        
       },
       capacity: {
         type: DataTypes.INTEGER,

@@ -13,7 +13,6 @@ const createCity = async (city) => {
     if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error.errors.forEach((err) => explanation.push(err.message));
-      console.log('Explanations: ', explanation);
       throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
     } else if (error.name === 'SequelizeUniqueConstraintError') {
       let explanation = [];

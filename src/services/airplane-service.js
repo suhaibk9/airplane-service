@@ -15,7 +15,7 @@ const createAirplane = async (airplane) => {
     if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error.errors.forEach((err) => explanation.push(err.message));
-      console.log('Explanations: ', explanation);
+
       throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
     }
     throw new AppError(

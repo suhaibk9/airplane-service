@@ -5,9 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.city, {
         foreignKey: 'cityId',
-        as: 'city',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+      });
+      this.hasMany(models.Flight, {
+        foreignKey: 'departureAirportId',
+      });
+      this.hasMany(models.Flight, {
+        foreignKey: 'arrivalAirportId',
       });
     }
   }
