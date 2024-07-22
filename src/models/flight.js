@@ -131,6 +131,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Flight',
     }
   );
-  console.log('Flight model initialized');
   return Flight;
 };
