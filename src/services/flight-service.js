@@ -64,16 +64,20 @@ const getAllFlights = async (query) => {
     console.log('sortFilter', sortFilter);
   }
   try {
-    const response = await flightRepository.getAllFlights( customFilter, sortFilter );
+    const response = await flightRepository.getAllFlights(
+      customFilter,
+      sortFilter
+    );
     return response;
   } catch (error) {
+    console.log('error', error);
     if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error.errors.forEach((err) => explanation.push(err.message));
       throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
     }
     throw new AppError(
-      'Error creating Airport',
+      'Error creating Flight',
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }

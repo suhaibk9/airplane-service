@@ -72,20 +72,18 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Flight extends Model {
     static associate(models) {
-      
       this.belongsTo(models.Airplane, {
         foreignKey: 'airplaneId',
-        as: 'airplaneDetail',
+        as: 'airplaneDetails',
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'departureAirportId',
-        as: 'departureAirport',
+        as: 'departure_airport',
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'arrivalAirportId',
-        as: 'arrivalAirport',
+        as: 'arrival_airport',
       });
-
     }
   }
   Flight.init(
