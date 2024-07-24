@@ -101,5 +101,21 @@ const getFlight = async (id) => {
     );
   }
 };
+const updateSeats = async (data) => {
+console.log("data", data)
+  try {
+    const res = await flightRepository.updateRemainingSeats(
+      data.flightId,
+      data.seats,
+      data.dec
+    );
+    return res;
+  } catch (error) {
+    throw new AppError(
+      'Error updating seats',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
 
-module.exports = { createFlight, getAllFlights, getFlight };
+module.exports = { createFlight, getAllFlights, getFlight, updateSeats };

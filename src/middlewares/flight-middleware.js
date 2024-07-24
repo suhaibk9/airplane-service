@@ -88,7 +88,19 @@ function validateCreateRequests(req, res, next) {
 
   next();
 }
+function validateUpdateSeatsRequest(req, res, next) {
+  const { seats } = req.body;
+  if (!seats) {
+    ErrorResponse.message = 'Something went wrong';
+    ErrorResponse.error = new AppError(
+      ['Seats is required'],
+      StatusCodes.BAD_REQUEST
+    );
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
 
+  next();
+}
 module.exports = {
   validateCreateRequests,
 };
