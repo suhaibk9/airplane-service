@@ -82,5 +82,24 @@ const getAllFlights = async (query) => {
     );
   }
 };
+const getFlight = async (id) => {
+  try {
+    const flight = await flightRepository.get(id);
+    return flight;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      throw new AppError('Flight not found', StatusCodes.NOT_FOUND);
+    }
+    if (error.name === 'SequelizeValidationError') {
+      let explanation = [];
+      error.errors.forEach((err) => explanation.push(err.message));
+      throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+    throw new AppError(
+      'Error getting Flight',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
 
-module.exports = { createFlight, getAllFlights };
+module.exports = { createFlight, getAllFlights, getFlight };
