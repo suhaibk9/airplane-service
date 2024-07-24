@@ -61,7 +61,7 @@ const getAllFlights = async (query) => {
     const params = query.sort.split(',');
     const sortFilters = params.map((param) => param.split('_'));
     sortFilter = sortFilters;
-    console.log('sortFilter', sortFilter);
+
   }
   try {
     const response = await flightRepository.getAllFlights(
@@ -70,7 +70,7 @@ const getAllFlights = async (query) => {
     );
     return response;
   } catch (error) {
-    console.log('error', error);
+
     if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error.errors.forEach((err) => explanation.push(err.message));
@@ -102,7 +102,7 @@ const getFlight = async (id) => {
   }
 };
 const updateSeats = async (data) => {
-console.log("data", data)
+
   try {
     const res = await flightRepository.updateRemainingSeats(
       data.flightId,

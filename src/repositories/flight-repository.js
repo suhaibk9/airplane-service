@@ -5,6 +5,7 @@ const { Airplane } = require('../models/index');
 const { Airport, city } = require('../models/index');
 const { addRowLockOnFlights } = require('../repositories/queries');
 const db = require('../models/index');
+const { AppError } = require('../utils/errors/app-error');
 const { add } = require('nodemon/lib/rules');
 class FlightRepository extends CrudRepository {
   constructor(model) {
@@ -57,20 +58,29 @@ class FlightRepository extends CrudRepository {
     return response;
   }
   async updateRemainingSeats(flightId, seats, dec = '1') {
-    await db.sequelize.query('SELECT * FROM Flights');
-    await db.sequelize.query(addRowLockOnFlights(flightId));
-    const flight = await this.model.findByPk(flightId);
-    if (parseInt(dec)) {
-      await flight.decrement('totalSeats', {
-        by: seats,
-      });
-    } else {
-      await flight.increment('totalSeats', {
-        by: seats,
-      });
+    try {
+      const transaction = await db.sequelize.transaction();
+      await db.sequelize.query(addRowLockOnFlights(flightId));
+      const flight = await this.model.findByPk(flightId);
+      if (+dec) {
+        await flight.decrement(
+          'totalSeats',
+          { by: seats },
+          { transaction: transaction }
+        );
+      } else {
+        await flight.increment(
+          'totalSeats',
+          { by: seats },
+          { transaction: transaction }
+        );
+      }
+      await transaction.commit();
+      return flight;
+    } catch (err) {
+      await transaction.rollback();
+      throw new AppError('Error updating flight seats', 500);
     }
-    await flight.save();
-    return flight;
   }
 }
 module.exports = FlightRepository;

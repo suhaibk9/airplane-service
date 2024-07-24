@@ -4,7 +4,7 @@ const { FlightService } = require('../services/index');
 
 async function createFlight(req, res) {
   try {
-    console.log('req.body', req.body);
+
     const flight = await FlightService.createFlight({
       flightNumber: req.body.flightNumber,
       airplaneId: req.body.airplaneId,
@@ -19,7 +19,7 @@ async function createFlight(req, res) {
     SuccessResponse.data = flight;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (err) {
-    console.log(err);
+
     ErrorResponse.error = err;
     return res
       .status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -32,7 +32,7 @@ async function getAllFlights(req, res) {
     SuccessResponse.data = flights;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (err) {
-    console.log(err);
+
     ErrorResponse.error = err;
     return res
       .status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -45,7 +45,7 @@ async function getFlight(req, res) {
     SuccessResponse.data = flight;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (err) {
-    console.log(err);
+
     ErrorResponse.error = err;
     return res
       .status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -53,7 +53,7 @@ async function getFlight(req, res) {
   }
 }
 async function updateSeats(req, res) {
-  console.log('req.body', req.body);
+
   try {
     const response = await FlightService.updateSeats({
       flightId: req.params.id,
@@ -63,7 +63,7 @@ async function updateSeats(req, res) {
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (err) {
-    console.log(err);
+
     ErrorResponse.error = err;
     return res
       .status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
